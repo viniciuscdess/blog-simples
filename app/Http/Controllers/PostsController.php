@@ -62,4 +62,19 @@ class PostsController extends Controller
 
         return redirect()->route('posts.index')->with('success', 'Post criado com sucesso!');
     }
+
+    public function edit($slug, $id)
+    {
+        $user = auth()->user(); 
+
+        if (!$slug || strlen($slug) < 3) redirect()->back(); 
+
+        if (!$id || $user->id !== $id) redirect()->back(); 
+
+        $post =  Post::with(['category','user'])->where('slug', "=", $slug)->firstOrFail();
+        
+        $categories = Category::all();
+
+        return view('posts/edit', compact('post','categories'));
+    }
 }

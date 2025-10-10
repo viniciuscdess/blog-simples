@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts', [PostsController::class, 'myPosts'])->name('posts.index');
     Route::get('/posts/create', [PostsController::class, 'create'])->name('posts.create');
     Route::post('/posts/store', [PostsController::class, 'store'])->name('posts.store');
+    Route::get('/posts/edit/{slug}/{id}', [PostsController::class, 'edit'])->name('posts.edit');
 
     Route::get('/posts/{slug}', [PostsController::class, 'view'])->name('posts.view');
 
