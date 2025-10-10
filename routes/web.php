@@ -22,6 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/posts', [PostsController::class, 'myPosts'])->name('posts.index');
     Route::get('/posts/create', [PostsController::class, 'create'])->name('posts.create');
+    Route::post('/posts/store', [PostsController::class, 'store'])->name('posts.store');
+
     Route::get('/posts/{slug}', [PostsController::class, 'view'])->name('posts.view');
 
 

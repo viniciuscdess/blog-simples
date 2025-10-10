@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class PostsController extends Controller
     {
         $user = auth()->user();
 
-        $posts = Post::with(['category','user'])->where('id', "=", $user->id)->orderBy('created_at', 'desc')->paginate(10);
+        $posts = Post::with(['category','user'])->where('user_id', "=", $user->id)->orderBy('created_at', 'desc')->paginate(10);
 
         return view('posts/index', compact('posts'));
     }
@@ -35,6 +36,30 @@ class PostsController extends Controller
 
     public function create()
     {
-        return view('posts/create');
+        $categories = Category::all();
+        
+        return view('posts/create', compact('categories'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|min:3',
+            'text' => 'required|min:3',
+            'category_id' => 'required|integer|exists:categories,id',
+        ]);
+
+        $user = auth()->user();
+
+        $post = new Post();
+        $post->title = $request->title;
+        $post->text = $request->text;   
+        $post->user_id = $user->id;   
+        $post->category_id = $request->category_id;   
+        $post->slug =  $user->id . '-' . str_replace(' ', '-' ,$request->title);
+        $post->save();
+
+
+        return redirect()->route('posts.index')->with('success', 'Post criado com sucesso!');
     }
 }
