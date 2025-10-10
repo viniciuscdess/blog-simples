@@ -129,7 +129,7 @@
 
                     <li class="{{ request()->is('profile') ? 'active' : '' }}"><a href="{{route('profile.index')}}">Perfil</a></li>
 
-                    <li class="{{ request()->is('posts') ? 'active' : '' }}"><a href="posts">Meus posts</a></li>
+                    <li class="{{ request()->is('meus-posts') ? 'active' : '' }}"><a href="#">Meus posts</a></li>
                 </ul>
             </nav>
 
@@ -141,10 +141,9 @@
     </header>
 
     <main class="container main-content">
-        @forelse($posts as $post)
             <section class="posts">
                 <article class="post-card">
-                    <h3 class="post-title"><a href="{{route('posts.view', ['slug'=> $post->slug])}}">{{ $post->title }}</a></h3>
+                    <h3 class="post-title">{{ $post->title }}</h3>
                     <div class="post-meta">
                         Author: <strong>{{ $post->user->name }}</strong>
                         •
@@ -152,16 +151,9 @@
                         <span class="post-date" style="float:right">Data: {{ $post->created_at->format('d/m/Y')  }}</span>
                     </div>
 
-                    <p class="post-body">{{ substr($post->text, 0, 80) }} ...</p>
+                    <p class="post-body">{{ $post->text }}</p>
                 </article>
             </section>
-        @empty
-            <p>Nenhum post encontrado.</p>
-        @endforelse
-
-        <div style="margin-top:1rem; text-align:center">
-            {{ $posts->links() }}
-        </div>
     </main>
 </body>
 </html>

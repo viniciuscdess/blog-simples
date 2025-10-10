@@ -45,6 +45,21 @@
             margin: 0;
         }
 
+        .menu li.active a,
+        .menu a[aria-current="page"] {
+            background: #0b1220; /* dark slate */
+            color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(11,18,32,0.08);
+        }
+
+        /* Keep hover subtle for active item but slightly lighten for affordance */
+        .menu li.active a:hover,
+        .menu a[aria-current="page"]:hover {
+            background: rgba(11,18,32,0.92);
+            color: #ffffff;
+        }
+
         .menu ul {
             list-style: none;
             display: flex;
@@ -107,11 +122,13 @@
         <div class="container">
             <h1 class="brand">Blog Pessoal</h1>
 
-            <nav class="menu" aria-label="Main Navigation">
+           <nav class="menu" aria-label="Main Navigation">
                 <ul>
-                    <li><a href="{{ route('home.index') }}">Dashboard</a></li>
-                    <li><a href="#">Perfil</a></li>
-                    <li><a href="#">Meus posts</a></li>
+                    <li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{ route('home.index') }}">Dashboard</a></li>
+
+                    <li class="{{ request()->is('profile') ? 'active' : '' }}"><a href="{{route('profile.index')}}">Perfil</a></li>
+
+                    <li class="{{ request()->is('posts') ? 'active' : '' }}"><a href="posts">Meus posts</a></li>
                 </ul>
             </nav>
 

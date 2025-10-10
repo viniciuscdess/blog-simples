@@ -20,5 +20,10 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/home', [PostsController::class, 'index'])->name('home.index');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/perfil', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/posts', [PostsController::class, 'myPosts'])->name('posts.index');
+    Route::get('/posts/create', [PostsController::class, 'create'])->name('posts.create');
+    Route::get('/posts/{slug}', [PostsController::class, 'view'])->name('posts.view');
+
+
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 });

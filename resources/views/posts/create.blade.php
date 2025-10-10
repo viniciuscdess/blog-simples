@@ -45,6 +45,21 @@
             margin: 0;
         }
 
+        .menu li.active a,
+        .menu a[aria-current="page"] {
+            background: #0b1220; /* dark slate */
+            color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(11,18,32,0.08);
+        }
+
+        /* Keep hover subtle for active item but slightly lighten for affordance */
+        .menu li.active a:hover,
+        .menu a[aria-current="page"]:hover {
+            background: rgba(11,18,32,0.92);
+            color: #ffffff;
+        }
+
         .menu ul {
             list-style: none;
             display: flex;
@@ -60,22 +75,6 @@
             padding: 0.35rem 0.5rem;
             border-radius: 6px;
             transition: background-color .12s ease, color .12s ease;
-        }
-
-        /* Active navigation item — darker background and white text */
-        .menu li.active a,
-        .menu a[aria-current="page"] {
-            background: #0b1220; /* dark slate */
-            color: #ffffff;
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(11,18,32,0.08);
-        }
-
-        /* Keep hover subtle for active item but slightly lighten for affordance */
-        .menu li.active a:hover,
-        .menu a[aria-current="page"]:hover {
-            background: rgba(11,18,32,0.92);
-            color: #ffffff;
         }
 
         .menu a:hover {
@@ -123,7 +122,7 @@
         <div class="container">
             <h1 class="brand">Blog Pessoal</h1>
 
-            <nav class="menu" aria-label="Main Navigation">
+           <nav class="menu" aria-label="Main Navigation">
                 <ul>
                     <li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{ route('home.index') }}">Dashboard</a></li>
 
@@ -141,27 +140,28 @@
     </header>
 
     <main class="container main-content">
-        @forelse($posts as $post)
-            <section class="posts">
-                <article class="post-card">
-                    <h3 class="post-title"><a href="{{route('posts.view', ['slug'=> $post->slug])}}">{{ $post->title }}</a></h3>
-                    <div class="post-meta">
-                        Author: <strong>{{ $post->user->name }}</strong>
-                        •
-                        Category: <strong>{{ optional($post->category)->title ?? 'Todos' }}</strong>
-                        <span class="post-date" style="float:right">Data: {{ $post->created_at->format('d/m/Y')  }}</span>
+        <section class="posts">
+            <article class="post-card">
+                <h2 class="post-title">Criar Postagem</h2>
+
+                <form action="#" method="POST" style="margin-top:1rem; display:block;">
+                    @csrf
+
+                    <label for="title" style="display:block; font-weight:600; margin-bottom:0.25rem;">Título</label>
+                    <input id="title" name="title" type="text" style="width:100%; padding:0.6rem; border:1px solid rgba(11,18,32,0.08); border-radius:8px; margin-bottom:0.75rem;">
+
+                    <label for="title" style="display:block; font-weight:600; margin-bottom:0.25rem;">Texto</label>
+                    <textarea name="text" id="text" cols="30" rows="10" style="width:100%; padding:0.6rem; border:1px solid rgba(11,18,32,0.08); border-radius:8px; margin-bottom:0.75rem;"></textarea>
+
+                    <div style="display:flex; gap:0.5rem;">
+                        <button type="submit" style="background:#0b1220; color:#fff; border:none; padding:0.6rem 0.9rem; border-radius:8px; cursor:pointer;">Salvar</button>
+
+                        <a href="{{ route('posts.index') }}" style="display:inline-block; padding:0.6rem 0.9rem; border-radius:8px; border:1px solid rgba(11,18,32,0.06); color:#334155; text-decoration:none;">Cancelar</a>
                     </div>
+                </form>
 
-                    <p class="post-body">{{ substr($post->text, 0, 80) }} ...</p>
-                </article>
-            </section>
-        @empty
-            <p>Nenhum post encontrado.</p>
-        @endforelse
-
-        <div style="margin-top:1rem; text-align:center">
-            {{ $posts->links() }}
-        </div>
+            </article>
+        </section>
     </main>
 </body>
 </html>
