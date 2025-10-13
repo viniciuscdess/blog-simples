@@ -144,7 +144,7 @@
             <article class="post-card">
                 <h2 class="post-title">Editar Postagem</h2>
 
-                <form action="{{route('posts.store')}}" method="POST" style="margin-top:1rem; display:block;">
+                <form action="{{route('posts.update')}}" method="POST" style="margin-top:1rem; display:block;">
                     @csrf
 
                     <label for="title" style="display:block; font-weight:600; margin-bottom:0.25rem;">Título</label>

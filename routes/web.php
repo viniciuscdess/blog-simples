@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/posts', [PostsController::class, 'myPosts'])->name('posts.index');
     Route::get('/posts/create', [PostsController::class, 'create'])->name('posts.create');
+    // aqui deveria usar o mesmo nome da rota sem o store, somente mudando o metodo http
     Route::post('/posts/store', [PostsController::class, 'store'])->name('posts.store');
     Route::get('/posts/edit/{slug}/{id}', [PostsController::class, 'edit'])->name('posts.edit');
 
