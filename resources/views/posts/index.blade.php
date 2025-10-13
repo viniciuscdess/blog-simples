@@ -111,6 +111,67 @@
         .post-meta { color: #64748b; font-size: 0.9rem; margin-bottom: 0.75rem; }
         .post-body { margin: 0; line-height: 1.6; color: #0b1220; }
 
+        /* Action links styling */
+        .actions { display: flex; gap: 0.75rem; align-items: center; margin-top: 0.5rem; }
+        .actions .action-link {
+            display: inline-block;
+            padding: 0.35rem 0.6rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            color: #334155;
+            border: 1px solid rgba(11,18,32,0.06);
+            background: transparent;
+            cursor: pointer;
+        }
+        .actions .action-link:hover {
+            background: rgba(15,23,42,0.03);
+            color: #0b1220;
+        }
+        .actions .edit-link { }
+        .actions .delete-link {
+            color: #b91c1c; /* red-700 */
+            border-color: rgba(185,28,28,0.08);
+            background: rgba(185,28,28,0.03);
+        }
+        .actions .delete-link:hover {
+            background: rgba(185,28,28,0.08);
+            color: #7f1d1d;
+        }
+
+        /* Header and Add button */
+        .list-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 1px solid rgba(11,18,32,0.08);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #0b1220;
+            color: #ffffff;
+            border-color: rgba(11,18,32,0.12);
+            box-shadow: 0 6px 18px rgba(11,18,32,0.06);
+        }
+
+        .btn-primary:hover {
+            background: #0f1724;
+        }
+
+        .add-post { }
+
         @media (max-width: 640px) {
             .topbar .container { flex-direction: column; align-items: center; }
             .menu ul { flex-wrap: wrap; justify-content: center; }
@@ -141,6 +202,10 @@
     </header>
 
     <main class="container main-content">
+        <div class="list-header">
+            <h2 style="margin:0">Meus posts</h2>
+            <a class="btn btn-primary add-post" href="{{ route('posts.create') }}">+ Adicionar</a>
+        </div>
         @forelse($posts as $post)
             <section class="posts">
                 <article class="post-card">
@@ -150,6 +215,19 @@
                         •
                         Category: <strong>{{ optional($post->category)->title ?? 'Todos' }}</strong>
                         <span class="post-date" style="float:right">Data: {{ $post->created_at->format('d/m/Y')  }}</span>
+                    </div>
+                    <div class="post-meta actions">
+                       <span>
+                           <a class="action-link edit-link" href="{{ route('posts.edit', ['slug' => $post->slug, 'id' => $post->user_id]) }}">Editar</a>
+                       </span>
+
+                       <span>
+                           <form class="inline-delete" action="{{ route('posts.delete', ['post' => $post->id]) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar este post?');">
+                               @csrf
+                               @method('DELETE')
+                               <button type="submit" class="action-link delete-link">Deletar</button>
+                           </form>
+                       </span>
                     </div>
 
                     <p class="post-body">{{ substr($post->text, 0, 80) }} ...</p>

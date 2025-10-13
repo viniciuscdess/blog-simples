@@ -146,7 +146,7 @@
 
                 <form action="{{route('posts.update')}}" method="POST" style="margin-top:1rem; display:block;">
                     @csrf
-
+                    @method('PUT')
                     <label for="title" style="display:block; font-weight:600; margin-bottom:0.25rem;">Título</label>
                     <input id="title" name="title" type="text" style="width:100%; padding:0.6rem; border:1px solid rgba(11,18,32,0.08); border-radius:8px; margin-bottom:0.75rem;" value="{{$post->title}}">
 
@@ -161,6 +161,7 @@
                               </option>
                         @endforeach
                     </select>
+                    <input type="hidden" name="id_post" id="id_post" value="{{$post->id}}">
 
                     <div style="display:flex; gap:0.5rem;">
                         <button type="submit" style="background:#0b1220; color:#fff; border:none; padding:0.6rem 0.9rem; border-radius:8px; cursor:pointer;">Editar</button>

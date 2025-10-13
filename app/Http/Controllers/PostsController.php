@@ -56,9 +56,8 @@ class PostsController extends Controller
         $post->text = $request->text;   
         $post->user_id = $user->id;   
         $post->category_id = $request->category_id;   
-        $post->slug =  $user->id . '-' . str_replace(' ', '-' ,$request->title);
+        $post->slug =   $this->makeSlug($request->title, $user->id);
         $post->save();
-
 
         return redirect()->route('posts.index')->with('success', 'Post criado com sucesso!');
     }
@@ -76,5 +75,42 @@ class PostsController extends Controller
         $categories = Category::all();
 
         return view('posts/edit', compact('post','categories'));
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|min:3',
+            'text' => 'required|min:3',
+            'category_id' => 'required|integer|exists:categories,id',
+        ]);
+
+        $user = auth()->user();
+
+        // isso aqui ja verifica se é o usuario criador
+        $post = $user->posts()->where('id', $request->id_post)->firstOrFail();
+        $post->title = $request->title;
+        $post->text = $request->text;   
+        $post->category_id = $request->category_id;   
+        $post->slug =   $this->makeSlug($request->title, $user->id);
+        $post->save();
+
+        return redirect()->route('posts.index')->with('success', 'Post editado com sucesso!');
+    }
+
+    private function makeSlug($title, $userId)
+    {
+        return $userId . '-' . str_replace(' ', '-' ,$title);
+    }
+
+    public function delete(Post $post)
+    {
+        $user = auth()->user();
+
+        if ($post->id_user !== $user->id) redirect()->back(); 
+
+        $post->delete();
+        
+        return redirect()->route('posts.index'); 
     }
 }
