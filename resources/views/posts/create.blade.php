@@ -14,10 +14,12 @@
                 @csrf
 
                 <label for="title" class="field-label">Título</label>
-                <input id="title" name="title" type="text" class="field-input">
+                <input id="title" name="title" type="text" class="field-input" value="{{old('title')}}">
+                @error('title') <div style="color:red">{{ $message }}</div> @enderror
 
                 <label for="title" class="field-label">Texto</label>
                 <textarea name="text" id="text" cols="30" rows="10" class="field-input"></textarea>
+                @error('text') <div style="color:red">{{ $message }}</div> @enderror
 
                 <label for="category" class="field-label">Categoria</label>
                 <select name="category_id" id="category" class="field-input">

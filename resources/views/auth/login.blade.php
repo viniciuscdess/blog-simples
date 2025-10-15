@@ -45,9 +45,11 @@
                <div>
                     <label for="email">Login</label>
                     <input type="text" name="email" placeholder="Digite seu email" id="email" />
+                     @error('email') <div style="color:red">{{ $message }}</div> @enderror
 
                     <label for="password">Senha</label>
                     <input type="password" name="password" placeholder="Digite sua senha" id="password" />
+                     @error('password') <div style="color:red">{{ $message }}</div> @enderror
 
                     <a href="{{route('register')}}">Nao tenho conta?</a>
                     <button type="submit">Enviar</button>

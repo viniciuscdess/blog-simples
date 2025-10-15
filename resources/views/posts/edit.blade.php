@@ -15,10 +15,13 @@
                 @method('PUT')
 
                 <label for="title" class="field-label">Título</label>
-                <input id="title" name="title" type="text" class="field-input" value="{{$post->title}}">
+                <input id="title" name="title" type="text" class="field-input" value="{{ old('title', $post->title ?? '') }}">
+                @error('title') <div style="color:red">{{ $message }}</div> @enderror
 
-                <label for="title" class="field-label">Texto</label>
-                <textarea name="text" id="text" cols="30" rows="10" class="field-input">{{$post->text}}</textarea>
+
+                <label for="text" class="field-label">Texto</label>
+                <textarea name="text" id="text" cols="30" rows="10" class="field-input">{{ old('title', $post->text ?? '') }}</textarea>
+                @error('text') <div style="color:red">{{ $message }}</div> @enderror
 
                 <label for="category" class="field-label">Categoria</label>
                 <select name="category_id" id="category" class="field-input">

@@ -50,15 +50,20 @@
                <div>
                     <label for="name">Nome</label>
                     <input type="text" name="name" placeholder="Digite seu nome completo" id="name" />
+                    @error('name') <div style="color:red">{{ $message }}</div> @enderror
 
                     <label for="email">Email</label>
                     <input type="text" name="email" placeholder="Digite seu email" id="email" />
+                    @error('email') <div style="color:red">{{ $message }}</div> @enderror
 
                     <label for="password">Senha</label>
                     <input type="password" name="password" placeholder="Digite sua senha" id="password" />
+                    @error('password') <div style="color:red">{{ $message }}</div> @enderror
 
                     <label for="password_confirmation">Confirmar Senha</label>
                     <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirme sua senha"/>
+                    @error('password_confirmation') <div style="color:red">{{ $message }}</div> @enderror
+                    
                     <button type="submit">Enviar</button>
                </div>
           </form>
