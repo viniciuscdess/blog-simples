@@ -7,7 +7,14 @@
         <a class="btn btn-primary add-post" href="{{ route('posts.create') }}">+ Adicionar</a>
     </div>
 
+    @if (session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
+
     @forelse($posts as $post)
+    
         <section class="posts">
             <article class="post-card">
                 <h3 class="post-title"><a href="{{route('posts.view', ['slug'=> $post->slug])}}">{{ $post->title }}</a></h3>

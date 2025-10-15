@@ -2,6 +2,11 @@
 @extends('layouts.app')
 
 @section('content')
+    @if (session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
     <section class="posts">
         <article class="post-card">
             <h2 class="post-title">Meu Perfil</h2>
@@ -26,7 +31,7 @@
                 <label for="password_confirmation" class="field-label">Confirmar senha</label>
                 <input id="password_confirmation" name="password_confirmation" type="password" class="field-input">
                 @error('password_confirmation') <div style="color:red">{{ $message }}</div> @enderror
-                
+
                 <div class="actions">
                     <button type="submit" class="btn btn-primary">Salvar</button>
                     <a href="{{ route('home.index') }}" class="action-link">Cancelar</a>
