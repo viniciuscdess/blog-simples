@@ -146,8 +146,9 @@
                 <div class="post-meta">Atualize seus dados abaixo</div>
 
                 <!-- Formulário front-end apenas -->
-                <form action="#" method="POST" style="margin-top:1rem; display:block;">
+                <form action="{{route('profile.update')}}" method="POST" style="margin-top:1rem; display:block;">
                     @csrf
+                    @method('PUT')
 
                     <label for="name" style="display:block; font-weight:600; margin-bottom:0.25rem;">Nome</label>
                     <input id="name" name="name" type="text" value="{{ old('name', auth()->user()->name ?? '') }}" style="width:100%; padding:0.6rem; border:1px solid rgba(11,18,32,0.08); border-radius:8px; margin-bottom:0.75rem;">
@@ -160,7 +161,7 @@
 
                     <label for="password_confirmation" style="display:block; font-weight:600; margin-bottom:0.25rem;">Confirmar senha</label>
                     <input id="password_confirmation" name="password_confirmation" type="password" style="width:100%; padding:0.6rem; border:1px solid rgba(11,18,32,0.08); border-radius:8px; margin-bottom:1rem;">
-
+                    
                     <div style="display:flex; gap:0.5rem;">
                         <button type="submit" style="background:#0b1220; color:#fff; border:none; padding:0.6rem 0.9rem; border-radius:8px; cursor:pointer;">Salvar</button>
                         <a href="{{ route('home.index') }}" style="display:inline-block; padding:0.6rem 0.9rem; border-radius:8px; border:1px solid rgba(11,18,32,0.06); color:#334155; text-decoration:none;">Cancelar</a>
