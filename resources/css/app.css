@@ -1,14 +1,7 @@
 @import 'tailwindcss';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
-
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-}
+/* Note: removed non-standard @source/@theme directives that caused CSS parse errors.
+   If these were intentionally used by a build tool, reintroduce them via that tool's config. */
 
 /* Custom layout styles for home page */
 :root {
@@ -80,13 +73,14 @@
 }
 
 .post-card {
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border: 1px solid rgba(255,255,255,0.03);
+    background: #ffffff; /* override for light cards in internal layout */
+    border: 1px solid rgba(11,18,32,0.06);
     padding: 1.25rem;
     border-radius: 10px;
-    color: #e6eef8;
+    color: #0b1220;
     max-width: 720px;
     margin: 0 auto;
+    box-shadow: 0 6px 18px rgba(11,18,32,0.06);
 }
 
 .post-title { margin: 0 0 0.25rem 0; }
@@ -96,4 +90,75 @@
 @media (max-width: 640px) {
     .topbar .container { flex-direction: column; align-items: center; }
     .menu ul { flex-wrap: wrap; justify-content: center; }
+}
+
+/* Internal (light) layout helpers */
+html, body { height: 100%; }
+body {
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+    color: #0b1220; /* dark slate */
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.main-content { padding: 2rem 1rem; }
+.post-title { margin: 0 0 0.25rem 0; }
+.post-meta { color: #64748b; font-size: 0.9rem; margin-bottom: 0.75rem; }
+.post-body { margin: 0; line-height: 1.6; color: #0b1220; }
+
+/* small utilities */
+.back-link {
+    display: inline-block;
+    margin: 1rem 0;
+    color: #0b1220;
+    text-decoration: none;
+    background: transparent;
+    padding: 0.35rem 0.6rem;
+    border-radius: 8px;
+    border: 1px solid rgba(11,18,32,0.06);
+    transition: background-color .12s ease, color .12s ease, transform .06s ease;
+}
+.back-link:hover { background: rgba(11,18,32,0.06); transform: translateY(-1px); }
+
+/* form helpers */
+.form-stack { margin-top: 1rem; display: block; }
+.field-label { display:block; font-weight:600; margin-bottom:0.25rem; }
+.field-input {
+    width:100%;
+    padding:0.6rem;
+    border:1px solid rgba(11,18,32,0.08);
+    border-radius:8px;
+    margin-bottom:0.75rem;
+    box-sizing: border-box;
+}
+
+.actions { display:flex; gap:0.5rem; }
+.action-link { display:inline-block; padding:0.6rem 0.9rem; border-radius:8px; border:1px solid rgba(11,18,32,0.06); color:#334155; text-decoration:none; }
+.action-link:hover { background: rgba(15,23,42,0.03); color: #0b1220; }
+
+.btn { display:inline-block; padding:0.5rem 0.75rem; border-radius:8px; text-decoration:none; font-weight:600; font-size:0.95rem; border:1px solid rgba(11,18,32,0.08); cursor:pointer; }
+.btn-primary { background:#0b1220; color:#fff; border-color: rgba(11,18,32,0.12); box-shadow: 0 6px 18px rgba(11,18,32,0.06); }
+.btn-primary:hover { background: #0f1724; }
+
+.actions .delete-link { color: #b91c1c; border-color: rgba(185,28,28,0.08); background: rgba(185,28,28,0.03); }
+.actions .delete-link:hover { background: rgba(185,28,28,0.08); color: #7f1d1d; }
+
+.post-date { float: right; }
+.pagination-wrap { margin-top:1rem; text-align:center; }
+
+/* list header: title + add button alignment */
+.list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 640px) {
+    .list-header { flex-direction: column; align-items: stretch; }
+    .list-header .btn { width: 100%; text-align: center; }
 }
