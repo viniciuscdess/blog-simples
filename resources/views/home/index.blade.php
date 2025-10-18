@@ -12,7 +12,7 @@
                     Category: <strong>{{ optional($post->category)->title ?? 'Todos' }}</strong>
                     <span class="post-date">Data: {{ $post->created_at->format('d/m/Y')  }}</span>
                 </div>
-
+                <img src="{{asset('storage/posts/'.$post->image)}}" alt="" width="100%" height="200px">
                 <p class="post-body">{{ substr($post->text, 0, 80) }} ...</p>
             </article>
         </section>

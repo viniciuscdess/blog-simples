@@ -23,8 +23,10 @@
                 <textarea name="text" id="text" cols="30" rows="10" class="field-input">{{ old('title', $post->text ?? '') }}</textarea>
                 @error('text') <div style="color:red">{{ $message }}</div> @enderror
 
-                {{-- <label for="image">Imagem</label>
-                <input type="file" name="image" id="image" class="field-input" accept="image/jpeg, image/jpg, image/png, image/webp"> --}}
+                <label for="image">Imagem</label>
+                <img src="{{asset('storage/posts/'.$post->image)}}" alt="" width="250px" height="250px">
+                <input type="file" name="image" id="image" class="field-input" accept="image/jpeg, image/jpg, image/png, image/webp">
+                @error('text') <div style="color:red">{{ $message }}</div> @enderror
 
                 <label for="category" class="field-label">Categoria</label>
                 <select name="category_id" id="category" class="field-input">

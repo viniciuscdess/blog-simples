@@ -96,9 +96,18 @@ class PostsController extends Controller
             'title' => 'required|min:3',
             'text' => 'required|min:3',
             'category_id' => 'required|integer|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         $user = auth()->user();
+
+        if ($request->hasFile('image')){
+            $file = $request->file('image');
+            
+            $filename = time() . '-' . $file->getClientOriginalName();
+            
+            $path = $file->storeAs('posts', $filename, 'public');
+        } 
 
         // isso aqui ja verifica se é o usuario criador
         $post = $user->posts()->where('id', $request->id_post)->firstOrFail();
@@ -106,6 +115,9 @@ class PostsController extends Controller
         $post->text = $request->text;   
         $post->category_id = $request->category_id;   
         $post->slug =   $this->makeSlug($request->title, $user->id);
+
+        $post->image = $filename ?: $post->image;
+
         $post->save();
 
         return redirect()->route('posts.index')->with('success', 'Post editado com sucesso!');

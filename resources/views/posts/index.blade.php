@@ -24,6 +24,7 @@
                     Category: <strong>{{ optional($post->category)->title ?? 'Todos' }}</strong>
                     <span class="post-date">Data: {{ $post->created_at->format('d/m/Y')  }}</span>
                 </div>
+                <img src="{{asset('storage/posts/'.$post->image)}}" alt="" width="100%" height="200px">
                 <div class="post-meta actions">
                    <span>
                        <a class="action-link edit-link" href="{{ route('posts.edit', ['slug' => $post->slug, 'id' => $post->user_id]) }}">Editar</a>
@@ -37,7 +38,7 @@
                        </form>
                    </span>
                 </div>
-
+                
                 <p class="post-body">{{ substr($post->text, 0, 80) }} ...</p>
             </article>
         </section>

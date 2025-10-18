@@ -14,7 +14,8 @@
                 Category: <strong>{{ optional($post->category)->title ?? 'Todos' }}</strong>
                 <span class="post-date">Data: {{ $post->created_at->format('d/m/Y')  }}</span>
             </div>
-
+             <img src="{{asset('storage/posts/'.$post->image)}}" alt="" width="100%" height="250px">
+             <br>
             <p class="post-body">{{ $post->text }}</p>
         </article>
     </section>
