@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PostsController extends Controller
 {
@@ -47,7 +48,16 @@ class PostsController extends Controller
             'title' => 'required|min:3',
             'text' => 'required|min:3',
             'category_id' => 'required|integer|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
+
+        if ($request->hasFile('image')){
+            $file = $request->file('image');
+            
+            $filename = time() . '-' . $file->getClientOriginalName();
+            
+            $path = $file->storeAs('posts', $filename, 'public');
+        } 
 
         $user = auth()->user();
 
@@ -57,6 +67,9 @@ class PostsController extends Controller
         $post->user_id = $user->id;   
         $post->category_id = $request->category_id;   
         $post->slug =   $this->makeSlug($request->title, $user->id);
+        
+        $post->image = $filename ?: null;
+       
         $post->save();
 
         return redirect()->route('posts.index')->with('success', 'Post criado com sucesso!');

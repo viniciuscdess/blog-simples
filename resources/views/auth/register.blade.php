@@ -63,7 +63,8 @@
                     <label for="password_confirmation">Confirmar Senha</label>
                     <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirme sua senha"/>
                     @error('password') <div style="color:red">{{ $message }}</div> @enderror
-                    
+                    <br/>
+                    <a href="{{route('login')}}">Fazer login</a>
                     <button type="submit">Enviar</button>
                </div>
           </form>

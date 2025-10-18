@@ -49,8 +49,12 @@
 
                     <label for="password">Senha</label>
                     <input type="password" name="password" placeholder="Digite sua senha" id="password" />
-                     @error('password') <div style="color:red">{{ $message }}</div> @enderror
+                    @error('password') <div style="color:red">{{ $message }}</div> @enderror
+                    
+                    <label for="remember">Lembrar-me</label>
+                    {{-- <input type="checkbox" name="remember" id="remember" />  --}}
 
+                    <br/>
                     <a href="{{route('register')}}">Nao tenho conta?</a>
                     <button type="submit">Enviar</button>
                </div>

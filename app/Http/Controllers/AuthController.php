@@ -40,6 +40,9 @@ class AuthController extends Controller
     
     public function loginStore(LoginRequest $request)
     {
+        // $remember = $request->only('remember');
+        // dd($remember);
+        
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
